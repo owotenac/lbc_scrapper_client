@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View, Image, Linking, Pressable } from 'react-native'
-import { ProductProps } from '@/models/products';
-import React, { useState } from 'react'
-import { router } from "expo-router";
 import FinancialComponentSimplified from '@/components/financial_component simplified';
-import { useStore } from '@/models/store'
-import AntDesign from '@expo/vector-icons/AntDesign';
-import { BackEndService } from '@/services/backend';
 import { useResponsive } from '@/hooks/responsive';
+import { ProductProps } from '@/models/products';
+import { useStore } from '@/models/store';
+import { BackEndService } from '@/services/backend';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { router } from "expo-router";
+import React, { useState } from 'react';
+import { Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
 
 
 export default function ProductCardSimplified(item: ProductProps) {
@@ -49,12 +49,16 @@ export default function ProductCardSimplified(item: ProductProps) {
                 <Text style={styles.location_text}>{item.location.zipcode} - {item.location.city}</Text>
 
                 {!disabled &&
-                    <View style={{ flexDirection: isMobile ? 'column' : 'row' }}>
+                    <View style={{ flexDirection: isMobile ? 'column' : 'row',
+                                 alignItems: isMobile? 'center': 'flex-start' }}>
                         {item.images_url.length > 0 &&
-                            <Image source={{ uri: item.images_url[0] }} style={styles.image} resizeMode="cover" />}
-                        <View style={styles.divider} />
+                            <Image source={{ uri: item.images_url[0] }} style={[styles.image ,
+                            {
+                                 width: isMobile ? 350 : 500 
+                                } 
+                            ]} resizeMode="cover" />}
                         {item.financials &&
-                            <View style={{ marginHorizontal: 50, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{ marginHorizontal: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <FinancialComponentSimplified data={item.financials[0]} />
                                 <FinancialComponentSimplified data={item.financials[1]} />
                             </View>
@@ -81,14 +85,13 @@ const styles = StyleSheet.create({
     card: {
         borderColor: "#33334d",
         borderWidth: 1,
-        padding: 15,
+        padding: 10,
         borderRadius: 10,
         backgroundColor: "#222232",
         marginBottom: 10,
     },
     image: {
-        width: 500,
-        height: 300,
+        height: 250,
         marginTop: 10,
         marginBottom: 10,
         borderRadius: 10, 

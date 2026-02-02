@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { FinancialsProps } from '@/models/financials';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 type Props = {
   data: FinancialsProps;
@@ -47,13 +47,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
     borderRadius: 8,
-    padding: 16,
+    padding: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    marginLeft: 10
+    marginLeft: 5
   },
   title: {
     fontSize: 20,

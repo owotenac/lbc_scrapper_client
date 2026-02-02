@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { FinancialsProps } from '@/models/financials';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 type Props = {
   data: FinancialsProps;
@@ -8,7 +8,7 @@ type Props = {
 
 const FinancialsTable: React.FC<Props> = ({ data }) => {
   const formatCurrency = (value: number) => {
-    return `${value.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 } ) } €`;
+    return `${value.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
   };
 
   const formatPercentage = (value: number) => {
@@ -26,8 +26,8 @@ const FinancialsTable: React.FC<Props> = ({ data }) => {
     <View style={styles.container}>
       <Text style={styles.title}>Financial Overview</Text>
       {data.default_monthly_rent &&
-        <Text style={styles.estimation_rent}>ESTIMATION LOYERS MENSUEL</Text>      
-        }
+        <Text style={styles.estimation_rent}>ESTIMATION LOYERS MENSUEL</Text>
+      }
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Information ACHAT</Text>
         <Row label="Prix" value={formatCurrency(data.price)} />
@@ -58,14 +58,13 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
     borderRadius: 8,
-    padding: 16,
+    padding: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    marginLeft: 50
-    //margin: 20
+        marginLeft: 5
   },
   title: {
     fontSize: 20,

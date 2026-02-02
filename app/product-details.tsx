@@ -1,21 +1,17 @@
 import CarouselImage from '@/components/carousel';
+import FinancialComponent from '@/components/financial_component';
+import { FinancialsProps } from '@/models/financials';
 import { global_styles } from '@/models/global-css';
 import { ProductProps } from '@/models/products';
-import { FinancialsProps } from '@/models/financials';
 import { BackEndService } from '@/services/backend';
-import FinancialComponent from '@/components/financial_component';
-import Entypo from '@expo/vector-icons/Entypo';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { router, useLocalSearchParams, useNavigation } from 'expo-router';
-import React, { useEffect, useState, } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, Text, View, Linking, Button } from 'react-native';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { useStore } from '@/models/store'
-import { Markdown } from "react-native-remark";
 import { useResponsive } from '@/hooks/responsive';
+import { useStore } from '@/models/store';
+import { useLocalSearchParams, useNavigation } from 'expo-router';
+import React, { useEffect, useState, } from 'react';
+import { ActivityIndicator, Button, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Markdown } from "react-native-remark";
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ProductDetails() {
 
@@ -104,7 +100,7 @@ export default function ProductDetails() {
         }
         if (item?.analysis) {
             return (
-                <View style={styles.ai_section}>
+                <View style={[styles.ai_section, { maxWidth: isMobile ? '100%' : '50%' , justifyContent: 'space-around' }] }>
                     <Markdown
                         markdown={item.analysis} 
                         customStyles={{
@@ -125,7 +121,7 @@ export default function ProductDetails() {
     const RenderFinancials = () => {
         if (financials) {
             return (
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
                     <FinancialComponent data={financials[0]} />
                     <FinancialComponent data={financials[1]} />
                 </View>
@@ -133,7 +129,7 @@ export default function ProductDetails() {
         }
         if (item?.financials) {
             return (
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
                     <FinancialComponent data={item.financials[0]} />
                     <FinancialComponent data={item.financials[1]} />
                 </View>
@@ -153,19 +149,19 @@ export default function ProductDetails() {
                             alignItems: 'center'
                         }}>
                             <View style={{ flexDirection: isMobile ? 'column' : 'row' , justifyContent: 'space-around' }}>
-                                <View style={{ marginTop: 80 , marginBottom: 10, marginLeft: 10}}>
+                                <View style={{ marginTop: 5 , marginBottom: 10, marginLeft: 10}}>
                                     <Text style={styles.main_text}>{item.subject}</Text>
                                     <Text style={styles.main_text}>{item.price_euros} €</Text>
                                     <Text style={styles.description}>{item.location.zipcode} - {item.location.city}</Text>
                                     <Text style={styles.link} onPress={() => Linking.openURL(item.url)}>{item.url}</Text>
                                 </View>
-                                <CarouselImage
-                                    images={item.images_url}
-                                />
-
-
                             </View>
                             <ScrollView style={styles.card}>
+                                <View style={{alignItems: 'center'}}>
+                                <CarouselImage
+                                    images={item.images_url}
+                                />    
+                                </View>                            
                                 <View style={styles.divider} />
                                 <Text style={styles.chapter}>Description</Text>
                                 <Text style={styles.description}>{item.body}</Text>
@@ -174,7 +170,7 @@ export default function ProductDetails() {
                                 <Text style={styles.chapter}>AI information</Text>
                                 <Button title="AI analysis" onPress={() => aiAnalysis(item)}></Button>
                                 {loading && <ActivityIndicator size="small" />}
-                                <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flexDirection: isMobile ? 'column' : 'row' , justifyContent: 'space-around' }}>
                                     {RenderAIText()}
                                     {RenderFinancials()}
                                 </View>
@@ -211,8 +207,8 @@ export default function ProductDetails() {
 
 const styles = StyleSheet.create({
     card: {
-        padding: 20,
-        flex: 1,
+        padding: 10,
+        flex: 1
     },
     location_text: {
         color: "#cccce6",
@@ -257,7 +253,7 @@ const styles = StyleSheet.create({
     ai_section: {
         backgroundColor: '#ffffff',
         borderRadius: 8,
-        padding: 16,
+        padding: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
@@ -265,7 +261,7 @@ const styles = StyleSheet.create({
         elevation: 3,
         marginTop: 10,
         marginBottom: 10,
-        maxWidth: "50%"
+        //maxWidth: "50%"
     },
     ai_description: {
         color: 'black',

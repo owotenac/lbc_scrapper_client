@@ -1,22 +1,24 @@
-import { StyleSheet, Text, View, FlatList, ActivityIndicator } from 'react-native'
-import React, { useState , useEffect} from 'react';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import ProductCardSimplified from '@/components/product_card_simplified';
 import { global_styles } from '@/models/global-css';
 import { ProductProps } from '@/models/products';
-import ProductCardSimplified  from '@/components/product_card_simplified';
 import { BackEndService } from '@/services/backend';
-
+import { useLocalSearchParams } from 'expo-router';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Read() {
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [items, setItems] = useState<ProductProps[]>([]);
+    const local = useLocalSearchParams();
+    const tempAds = local.tempAds;
 
     const fetchItems = async () => {
         try {
             setLoading(true);
             //get the products from backend
             console.log('fetch')
-            const result = await BackEndService.readItems();
+            const result = await BackEndService.readItems(tempAds as string);
             setItems(result['data']);
             setLoading(false);
 

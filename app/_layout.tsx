@@ -1,5 +1,5 @@
-import { Stack } from "expo-router";
 import { useFonts } from 'expo-font';
+import { Stack } from "expo-router";
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -12,5 +12,12 @@ export default function RootLayout() {
     return null;
   }
 
-  return <Stack />;
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" options={{ title: '' }} />
+      <Stack.Screen name="product-details" options={{ title: '' }} />
+      <Stack.Screen name="read" options={{ title: '' }} />
+      <Stack.Screen name="search" options={{ title: '' }} />
+    </Stack>
+  );
 }

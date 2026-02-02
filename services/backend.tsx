@@ -1,5 +1,5 @@
-import { ProductProps, ProductAttribute} from "../models/products";
-import { FinancialsProps } from "@/models/financials"
+import { FinancialsProps } from "@/models/financials";
+import { ProductAttribute, ProductProps } from "../models/products";
 
 import axios from 'axios';
 
@@ -7,8 +7,8 @@ import axios from 'axios';
 export class BackEndService {
 
   static api = axios.create({
-    //baseURL: 'https://onfekoi-server.vercel.app/',
-    baseURL: 'http://127.0.0.1:5002',
+    baseURL: 'https://lbc-scrapper-server.vercel.app/',
+    //baseURL: 'http://127.0.0.1:5002',
     //timeout: 25000,
   });
 
@@ -25,9 +25,11 @@ export class BackEndService {
     }
   };
 
-  static readItems = async () => {
-    //console.trace()
+  static readItems = async (tempAds: string) => {
     const { data } = await BackEndService.api.get('/api/colddata', {
+      params :{
+        tempAds: tempAds
+      }
     });
     const products = data as ProductProps[];
     return {
@@ -92,11 +94,8 @@ export class BackEndService {
     return data
   };
 
-    static autoSearch = async (url: string) => {
-    const { data } = await BackEndService.api.delete('/api/autosearch', {
-      params: {
-        url: url
-      }
+    static autoSearch = async () => {
+    const { data } = await BackEndService.api.get('/api/autosearch', {
     });
   };
 
