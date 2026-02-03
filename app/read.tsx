@@ -47,7 +47,7 @@ export default function Read() {
                 }
                 //onEndReached={loadMore}
                 onEndReachedThreshold={2}
-                windowSize={4}
+                //windowSize={4}
                 ListFooterComponent={() => (
                     <View>
                         {loading && <ActivityIndicator size="large" />}

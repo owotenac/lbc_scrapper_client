@@ -1,16 +1,19 @@
+import { featureFlags } from '@/models/config';
 import { FinancialsProps } from "@/models/financials";
-import { ProductAttribute, ProductProps } from "../models/products";
-
 import axios from 'axios';
+import { ProductAttribute, ProductProps } from "../models/products";
 
 
 export class BackEndService {
 
-  static api = axios.create({
-    baseURL: 'https://lbc-scrapper-server.vercel.app/',
-    //baseURL: 'http://127.0.0.1:5002',
-    //timeout: 25000,
-  });
+static URL = featureFlags.isReadOnly 
+  ? 'https://lbc-scrapper-server.vercel.app/'
+  : 'http://127.0.0.1:5002';
+
+static api = axios.create({
+  baseURL: BackEndService.URL,
+  //timeout: 25000,
+});
 
   static searchItems = async (url: string) => {
 
