@@ -1,5 +1,6 @@
-import FinancialComponentSimplified from '@/components/financial_component simplified';
+import FinancialComponent from '@/components/financial_component';
 import { useResponsive } from '@/hooks/responsive';
+import { featureFlags } from '@/models/config';
 import { ProductProps } from '@/models/products';
 import { useStore } from '@/models/store';
 import { BackEndService } from '@/services/backend';
@@ -7,7 +8,6 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { router } from "expo-router";
 import React, { useState } from 'react';
 import { Image, Linking, Pressable, StyleSheet, Text, View } from 'react-native';
-
 
 export default function ProductCardSimplified(item: ProductProps) {
     const { setProduct } = useStore();
@@ -59,12 +59,13 @@ export default function ProductCardSimplified(item: ProductProps) {
                             ]} resizeMode="cover" />}
                         {item.financials &&
                             <View style={{ marginHorizontal: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <FinancialComponentSimplified data={item.financials[0]} />
-                                <FinancialComponentSimplified data={item.financials[1]} />
+                                <FinancialComponent data={item.financials[0]} isSimplified={true}/>
+                                <FinancialComponent data={item.financials[1]} isSimplified={true}/>
                             </View>
                         }
                     </View>
                 }
+                { !featureFlags.isReadOnly &&                 
                 <Pressable onPress={removeFromList} style={{ marginTop: 10, alignSelf: 'flex-start' }}>
                     <View style={!disabled ? styles.buttonRemove : styles.buttonRemoveDisabled}>
                         <AntDesign name="close-circle" size={24} color="white" />
@@ -76,6 +77,7 @@ export default function ProductCardSimplified(item: ProductProps) {
                         }
                     </View>
                 </Pressable>
+                }
             </View>
         </Pressable>
     )

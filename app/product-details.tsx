@@ -123,16 +123,16 @@ export default function ProductDetails() {
         if (financials) {
             return (
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
-                    <FinancialComponent data={financials[0]} />
-                    <FinancialComponent data={financials[1]} />
+                    <FinancialComponent data={financials[0]} isSimplified={false} />
+                    <FinancialComponent data={financials[1]} isSimplified={false} />
                 </View>
             )
         }
         if (item?.financials) {
             return (
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
-                    <FinancialComponent data={item.financials[0]} />
-                    <FinancialComponent data={item.financials[1]} />
+                    <FinancialComponent data={item.financials[0]} isSimplified={false}/>
+                    <FinancialComponent data={item.financials[1]} isSimplified={false}/>
                 </View>
             )
         }

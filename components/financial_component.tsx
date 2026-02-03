@@ -4,9 +4,10 @@ import { StyleSheet, Text, View } from 'react-native';
 
 type Props = {
   data: FinancialsProps;
+  isSimplified: boolean;
 };
 
-const FinancialsTable: React.FC<Props> = ({ data }) => {
+const FinancialsTable: React.FC<Props> = ({ data, isSimplified }) => {
   const formatCurrency = (value: number) => {
     return `${value.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
   };
@@ -30,8 +31,12 @@ const FinancialsTable: React.FC<Props> = ({ data }) => {
       }
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Information ACHAT</Text>
-        <Row label="Prix" value={formatCurrency(data.price)} />
-        <Row label="Frais de Notaire" value={formatCurrency(data.notary_fees)} />
+        {!isSimplified &&
+          <>
+            <Row label="Prix" value={formatCurrency(data.price)} />
+            <Row label="Frais de Notaire" value={formatCurrency(data.notary_fees)} />
+          </>
+        }
         <Row label="Prix Total" value={formatCurrency(data.total_price)} />
       </View>
 
@@ -39,16 +44,24 @@ const FinancialsTable: React.FC<Props> = ({ data }) => {
         <Text style={styles.sectionTitle}>Details</Text>
         <Row label="Mensualité Credit" value={formatCurrency(data.mensualite)} />
         <Row label="Loyers mensuels" value={formatCurrency(data.total_monthly_rent)} />
-        <Row label="Loyers Annuels" value={formatCurrency(data.total_yearly_rent)} />
-        <Row label="Charges Annuels" value={formatCurrency(data.annual_charge)} />
+        {!isSimplified &&
+          <>
+            <Row label="Loyers Annuels" value={formatCurrency(data.total_yearly_rent)} />
+            <Row label="Charges Annuels" value={formatCurrency(data.annual_charge)} />
+          </>
+        }
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Profitability</Text>
         <Row label="Monthly Cash Flow" value={formatCurrency(data.monthly_cash_flow)} />
-        <Row label="Annual Cash Flow" value={formatCurrency(data.annual_cash_flow)} />
-        <Row label="Raw Rentability" value={formatPercentage(data.raw_rentability)} />
-        <Row label="Net Rentability" value={formatPercentage(data.net_rentability)} />
+        {!isSimplified &&
+          <>
+            <Row label="Annual Cash Flow" value={formatCurrency(data.annual_cash_flow)} />
+            <Row label="Raw Rentability" value={formatPercentage(data.raw_rentability)} />
+            <Row label="Net Rentability" value={formatPercentage(data.net_rentability)} />
+          </>
+        }
       </View>
     </View>
   );
@@ -64,10 +77,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-        marginLeft: 5
+    marginLeft: 5
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: 'bold',
     marginBottom: 16,
     color: '#333',
@@ -79,13 +92,13 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: '600',
     marginBottom: 8,
     color: '#555',
   },
   estimation_rent: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     marginBottom: 8,
     color: '#f00',
@@ -96,12 +109,12 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   label: {
-    fontSize: 14,
+    fontSize: 12,
     color: '#666',
     flex: 1,
   },
   value: {
-    fontSize: 17,
+    fontSize: 14,
     fontWeight: '500',
     color: '#333',
     textAlign: 'right',
