@@ -1,5 +1,5 @@
-import { ProductProps } from "./products";
 import { create } from 'zustand';
+import { ProductProps } from "./products";
 
 type ProductStore = {
   products: ProductProps;

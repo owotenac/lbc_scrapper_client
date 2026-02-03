@@ -6,6 +6,7 @@ import { ProductProps } from '@/models/products';
 import { BackEndService } from '@/services/backend';
 
 import { useResponsive } from '@/hooks/responsive';
+import { featureFlags } from '@/models/config';
 import { useStore } from '@/models/store';
 import { useLocalSearchParams, useNavigation } from 'expo-router';
 import React, { useEffect, useState, } from 'react';
@@ -168,15 +169,18 @@ export default function ProductDetails() {
 
                                 <View style={styles.divider} />
                                 <Text style={styles.chapter}>AI information</Text>
+                                { !featureFlags.isReadOnly && 
                                 <Button title="AI analysis" onPress={() => aiAnalysis(item)}></Button>
+                                }
                                 {loading && <ActivityIndicator size="small" />}
                                 <View style={{ flexDirection: isMobile ? 'column' : 'row' , justifyContent: 'space-around' }}>
                                     {RenderAIText()}
                                     {RenderFinancials()}
                                 </View>
                                 <View style={styles.divider} />
+                                { !featureFlags.isReadOnly && 
                                 <Button title="Save" onPress={() => save(item)}></Button>
-
+                                }
                                 {/* {item.attributes_cleaned &&
                                     <View style={{ flex: 1 }}>
                                         <Text style={styles.chapter}>Features</Text>
