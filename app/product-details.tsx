@@ -122,7 +122,7 @@ export default function ProductDetails() {
     const RenderFinancials = () => {
         if (financials) {
             return (
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
+                <View style={{ flex:1, flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
                     <FinancialComponent data={financials[0]} isSimplified={false} />
                     <FinancialComponent data={financials[1]} isSimplified={false} />
                 </View>
@@ -130,7 +130,7 @@ export default function ProductDetails() {
         }
         if (item?.financials) {
             return (
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
+                <View style={{ flex:1, flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
                     <FinancialComponent data={item.financials[0]} isSimplified={false}/>
                     <FinancialComponent data={item.financials[1]} isSimplified={false}/>
                 </View>
@@ -140,7 +140,7 @@ export default function ProductDetails() {
 
     return (
         <SafeAreaProvider style={global_styles.container}>
-            <SafeAreaView style={{flex:1}}>
+            <SafeAreaView style={{flex:1, width:"100%"}}>
                 {!item ? (
                     <ActivityIndicator size="large" />
                 ) :
@@ -265,6 +265,7 @@ const styles = StyleSheet.create({
         elevation: 3,
         marginTop: 10,
         marginBottom: 10,
+        //flex:1
         //maxWidth: "50%"
     },
     ai_description: {
