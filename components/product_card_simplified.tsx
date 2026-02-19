@@ -40,6 +40,7 @@ export default function ProductCardSimplified(item: ProductProps) {
     }
 
     return (
+        <View style={{flex:1}}>
         <Pressable
             onPress={openDetails}>
             <View style={styles.card}>
@@ -80,11 +81,13 @@ export default function ProductCardSimplified(item: ProductProps) {
                 }
             </View>
         </Pressable>
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     card: {
+        flex:1,
         borderColor: "#33334d",
         borderWidth: 1,
         padding: 10,

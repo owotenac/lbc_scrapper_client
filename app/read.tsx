@@ -33,7 +33,7 @@ export default function Read() {
         }, [])
 
   return (
-        <SafeAreaProvider>
+        <SafeAreaProvider > 
             <SafeAreaView style={global_styles.container}>
 
         <View style={styles.content}>

@@ -1,17 +1,36 @@
 import { featureFlags } from '@/models/config';
 import { FinancialsProps } from "@/models/financials";
 import axios from 'axios';
+import { Platform } from "react-native";
 import { ProductAttribute, ProductProps } from "../models/products";
+
+export const BASE_URL_BACKEND = 'https://lbc-scrapper-server.vercel.app/'
+export const BASE_URL_BACKEND_LOCAL = 'http://127.0.0.1:5002'
+
+
+  const getBaseURL = () => {
+  if (Platform.OS === 'android') {
+    return BASE_URL_BACKEND;
+  }
+  if (Platform.OS === 'web') {
+   return featureFlags.isReadOnly 
+  ? BASE_URL_BACKEND
+  : BASE_URL_BACKEND_LOCAL
+  }
+  // iOS or other platforms
+  return BASE_URL_BACKEND;
+};
 
 
 export class BackEndService {
 
-static URL = featureFlags.isReadOnly 
-  ? 'https://lbc-scrapper-server.vercel.app/'
-  : 'http://127.0.0.1:5002';
+// static URL = featureFlags.isReadOnly 
+//   ? 'https://lbc-scrapper-server.vercel.app/'
+//   : 'http://127.0.0.1:5002';
+
 
 static api = axios.create({
-  baseURL: BackEndService.URL,
+  baseURL: getBaseURL(),
   //timeout: 25000,
 });
 

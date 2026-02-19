@@ -77,7 +77,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-    marginLeft: 5
+    marginLeft: 5,
+    //flexWrap: 'wrap',
+    flex:1
   },
   title: {
     fontSize: 15,
@@ -98,10 +100,11 @@ const styles = StyleSheet.create({
     color: '#555',
   },
   estimation_rent: {
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '600',
     marginBottom: 8,
     color: '#f00',
+    wordWrap: 'True'
   },
   row: {
     flexDirection: 'row',

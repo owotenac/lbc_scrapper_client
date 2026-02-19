@@ -139,8 +139,8 @@ export default function ProductDetails() {
     }
 
     return (
-        <SafeAreaProvider>
-            <SafeAreaView style={global_styles.container}>
+        <SafeAreaProvider style={global_styles.container}>
+            <SafeAreaView style={{flex:1}}>
                 {!item ? (
                     <ActivityIndicator size="large" />
                 ) :
