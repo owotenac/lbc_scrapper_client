@@ -78,13 +78,14 @@ export default function ProductDetails() {
             await BackEndService.saveProduct(item);
         } catch (error) {
             console.error("Error saving:", error);
-        }        
+        }
     }
 
     const RenderAIText = () => {
         if (AItext) {
             return (
-                <View style={styles.ai_section}>
+                // Add the same constraint to both branches
+<View style={[styles.ai_section, { maxWidth: isMobile ? '100%' : '50%' }]}>
                     <Markdown
                         markdown={AItext}
                         customStyles={{
@@ -101,9 +102,10 @@ export default function ProductDetails() {
         }
         if (item?.analysis) {
             return (
-                <View style={[styles.ai_section, { maxWidth: isMobile ? '100%' : '50%' , justifyContent: 'space-around' }] }>
+                // Add the same constraint to both branches
+<View style={[styles.ai_section, { maxWidth: isMobile ? '100%' : '50%' }]}>
                     <Markdown
-                        markdown={item.analysis} 
+                        markdown={item.analysis}
                         customStyles={{
                             // Override default styles
                             inlineCode: {
@@ -122,7 +124,7 @@ export default function ProductDetails() {
     const RenderFinancials = () => {
         if (financials) {
             return (
-                <View style={{ flex:1, flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', padding: 5, maxWidth: isMobile ? '100%' : '50%' }}>
                     <FinancialComponent data={financials[0]} isSimplified={false} />
                     <FinancialComponent data={financials[1]} isSimplified={false} />
                 </View>
@@ -130,27 +132,24 @@ export default function ProductDetails() {
         }
         if (item?.financials) {
             return (
-                <View style={{ flex:1, flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
-                    <FinancialComponent data={item.financials[0]} isSimplified={false}/>
-                    <FinancialComponent data={item.financials[1]} isSimplified={false}/>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', padding: 5, maxWidth: isMobile ? '100%' : '50%' }}>
+                    <FinancialComponent data={item.financials[0]} isSimplified={false} />
+                    <FinancialComponent data={item.financials[1]} isSimplified={false} />
                 </View>
             )
         }
     }
 
     return (
-        <SafeAreaProvider style={global_styles.container}>
-            <SafeAreaView style={{flex:1, width:"100%"}}>
+        <SafeAreaProvider >
+            <SafeAreaView style={global_styles.container}>
                 {!item ? (
                     <ActivityIndicator size="large" />
                 ) :
                     (
-                        <View style={{
-                            flex: 1, alignContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <View style={{ flexDirection: isMobile ? 'column' : 'row' , justifyContent: 'space-around' }}>
-                                <View style={{ marginTop: 5 , marginBottom: 10, marginLeft: 10}}>
+                        <View style={{ flex:1}}>
+                            <View style={{ flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-around' }}>
+                                <View style={{ marginTop: 5, marginBottom: 10, marginLeft: 10 }}>
                                     <Text style={styles.main_text}>{item.subject}</Text>
                                     <Text style={styles.main_text}>{item.price_euros} €</Text>
                                     <Text style={styles.description}>{item.location.zipcode} - {item.location.city}</Text>
@@ -158,48 +157,31 @@ export default function ProductDetails() {
                                 </View>
                             </View>
                             <ScrollView style={styles.card}>
-                                <View style={{alignItems: 'center'}}>
-                                <CarouselImage
-                                    images={item.images_url}
-                                />    
-                                </View>                            
+                                <View >
+                                <View style={{ alignItems: 'center' }}>
+                                    <CarouselImage
+                                        images={item.images_url}
+                                    />
+                                </View>
                                 <View style={styles.divider} />
                                 <Text style={styles.chapter}>Description</Text>
                                 <Text style={styles.description}>{item.body}</Text>
 
                                 <View style={styles.divider} />
                                 <Text style={styles.chapter}>AI information</Text>
-                                { !featureFlags.isReadOnly && 
-                                <Button title="AI analysis" onPress={() => aiAnalysis(item)}></Button>
+                                {!featureFlags.isReadOnly &&
+                                    <Button title="AI analysis" onPress={() => aiAnalysis(item)}></Button>
                                 }
                                 {loading && <ActivityIndicator size="small" />}
-                                <View style={{ flexDirection: isMobile ? 'column' : 'row' , justifyContent: 'space-around' }}>
+                                <View style={{ flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-around' }}>
                                     {RenderAIText()}
                                     {RenderFinancials()}
                                 </View>
                                 <View style={styles.divider} />
-                                { !featureFlags.isReadOnly && 
-                                <Button title="Save" onPress={() => save(item)}></Button>
+                                {!featureFlags.isReadOnly &&
+                                    <Button title="Save" onPress={() => save(item)}></Button>
                                 }
-                                {/* {item.attributes_cleaned &&
-                                    <View style={{ flex: 1 }}>
-                                        <Text style={styles.chapter}>Features</Text>
-
-                                        {item.attributes_cleaned.map((feature, index) => (
-                                            feature.key_label ? (
-                                                <Text key={feature.key} style={styles.contact_text}>
-                                                    {feature.key_label}: {feature.value_label}
-                                                </Text>
-                                            ) : (
-                                                <Text key={feature.key} style={styles.contact_text}>
-                                                    {feature.key}: {feature.value_label}
-                                                </Text>
-                                            )
-                                        ))}
-                                    </View>
-                                } */}
-
-
+                                </View>
                             </ScrollView>
                         </View>
 
@@ -210,10 +192,11 @@ export default function ProductDetails() {
 }
 
 const styles = StyleSheet.create({
-    card: {
-        padding: 10,
-        flex: 1
-    },
+card: {
+    padding: 10,
+    flex: 1,
+    alignSelf: 'stretch', 
+},
     location_text: {
         color: "#cccce6",
         fontSize: 20,
