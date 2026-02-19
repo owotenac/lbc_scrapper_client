@@ -147,7 +147,7 @@ export default function ProductDetails() {
                     <ActivityIndicator size="large" />
                 ) :
                     (
-                        <View style={{ flex:1}}>
+                        <View style={{ flex: 1, width: '100%', overflow: 'hidden' }}>
                             <View style={{ flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-around' }}>
                                 <View style={{ marginTop: 5, marginBottom: 10, marginLeft: 10 }}>
                                     <Text style={styles.main_text}>{item.subject}</Text>
